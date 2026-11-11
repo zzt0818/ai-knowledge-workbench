@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent 知识库 · AI 与大模型学习工作台</title>
+<meta name="description" content="按主题整理的 Agent 与大模型知识库：模型机制、提示与上下文、检索增强、Agent 核心、框架与工具链、工程与生产、评测与安全。按档分层，随手检索。">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+<link rel="alternate icon" href="assets/app-icon.ico">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<!-- ==================== 顶栏 ==================== -->
+<header class="nav">
+  <div class="nav-in">
+    <div class="brand">
+      <span class="brand-mk"><svg viewBox="0 0 64 64" width="20" height="20" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" opacity=".9"><path d="M20 19 L45 23"/><path d="M20 19 L32 46"/><path d="M45 23 L32 46"/></g><g fill="#fff"><circle cx="20" cy="19" r="5.8"/><circle cx="45" cy="23" r="5.8"/><circle cx="32" cy="46" r="5.8"/></g></svg></span>
+      <b>Agent 知识库</b>
+    </div>
+    <div class="nav-fill"></div>
+    <!-- 等级：由 core.js 按 DATA.stages 生成。选一档之后，超出这一档的内容会淡出 -->
+    <div class="stgbar" id="stage-mount" role="group" aria-label="知识等级"></div>
+    <button class="srch" type="button" data-act="search">
+      <span>检索</span><kbd>Ctrl</kbd><kbd>K</kbd>
+    </button>
+  </div>
+  <!-- 视图导航：由 views.js 按 DATA.views 生成 -->
+  <nav class="tabs" id="tabs-mount" aria-label="视图导航"></nav>
+</header>
+
+<!-- ==================== 主视图区 ==================== -->
+<main class="sheet">
+<div class="wrap">
+<div class="sheet-frame" id="views-mount"></div>
+</div>
+</main>
+
+<!-- ==================== 检索浮层 ==================== -->
+<div class="finder" id="finder" aria-hidden="true" role="dialog" aria-label="检索">
+  <div class="finder-box">
+    <div class="finder-hd">
+      <span class="tag">检索</span>
+      <input id="finder-input" type="text" autocomplete="off" spellcheck="false"
+             placeholder="搜知识点、标签、题目、选型、踩坑……">
+      <button class="finder-x" type="button" data-act="finder-close" aria-label="关闭">✕</button>
+    </div>
+    <div class="finder-body" id="finder-body"></div>
+    <div class="finder-ft">
+      <span class="tag">↑↓ 选择</span>
+      <span class="tag">Enter 打开</span>
+      <span class="tag">Esc 关闭</span>
+      <span class="finder-cnt" data-finder-cnt></span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 内容抽屉 ==================== -->
+<aside class="scrim" aria-hidden="true"></aside>
+<aside class="dwg" aria-label="内容详情">
+  <div class="dwg-hd">
+    <div class="dwg-hd-top">
+      <span class="tag" data-dwg-kicker>所属主题</span>
+      <div class="dwg-hd-act">
+        <button class="star" type="button" data-act="star" data-on="0" aria-label="收藏">☆</button>
+        <button class="dwg-close" type="button" data-act="close" aria-label="关闭">✕</button>
+      </div>
+    </div>
+    <h3 data-dwg-title>—</h3>
+    <p class="dwg-desc" data-dwg-desc>—</p>
+  </div>
+  <div class="seg"></div>
+  <div class="dwg-body"></div>
+  <div class="dwg-ft">
+    <button class="btn ghost" type="button" data-act="prev" aria-label="上一条">←</button>
+    <button class="btn ghost" type="button" data-act="next" aria-label="下一条">→</button>
+    <div class="dwg-ft-fill"></div>
+    <span class="tag">Esc 关闭</span>
+  </div>
+</aside>
+
+<!-- ==================== 脚本 ==================== -->
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/content-llm.js"></script>
+<script src="assets/js/content-agent.js"></script>
+<script src="assets/js/card-foundation.js"></script>
+<script src="assets/js/card-core.js"></script>
+<script src="assets/js/card-engineering.js"></script>
+<script src="assets/js/data-notes.js"></script>
+
+<script src="assets/js/data-stack.js"></script>
+<script src="assets/js/data-arch.js"></script>
+<!-- 架构的按档视角：跟 data-arch.js 分开一层，改"哪一档看什么"不用碰模式数据 -->
+<script src="assets/js/data-arch-stage.js"></script>
+<script src="assets/js/data-cases.js"></script>
+<script src="assets/js/data-pitfalls.js"></script>
+<script src="assets/js/data-drill.js"></script>
+<script src="assets/js/data-roadmap.js"></script>
+<!-- 发展史：国外 / 国内两条线的时间线数据。views.js 直接读 window.HISTORY。
+     这一层不标等级（史实不按档收放），缘由写在文件头的注释里 -->
+<script src="assets/js/data-history.js"></script>
+<!-- 按厂商看的版本线：先国外层（定义 window.VENDORS 与 VENDORS_ADD），再国内层。
+     两层共用一个 list，视图层只读 window.VENDORS -->
+<script src="assets/js/data-vendors.js"></script>
+<script src="assets/js/data-vendors-cn.js"></script>
+<script src="assets/js/deep-llm.js"></script>
+<script src="assets/js/deep-agent.js"></script>
+<script src="assets/js/data-deep.js"></script>
+<script src="assets/js/data-plain.js"></script>
+<!-- 行业落地层：分级讲「你到哪一档」，这一层讲「这行能干什么、代价是什么」。
+     与扩充层无关，纯数据，视图层（views.js）直接读 window.INDUSTRY。 -->
+<script src="assets/js/data-industry.js"></script>
+<!-- 主题×行业的用法映射：把行业内容从"一个独立页面"拆成能渗进
+     抽屉、总览、分级视图的一句话。必须紧跟在 data-industry.js 之后 -->
+<script src="assets/js/data-industry-use.js"></script>
+
+<!-- 知识扩充层：从外部资料提炼的增量条目，必须在 data-plain.js 之后、
+     渲染层（views.js / core.js）之前完成注册 -->
+<script src="assets/js/adv.js"></script>
+<script src="assets/js/adv-rag.js"></script>
+<script src="assets/js/adv-agent.js"></script>
+<script src="assets/js/adv-coding.js"></script>
+<script src="assets/js/adv-context.js"></script>
+<!-- 分级扩充：入门/认识（adv-start）与 认识/上手（adv-craft），
+     面向零基础读者，措辞通俗但机制照旧讲透 -->
+<script src="assets/js/adv-start.js"></script>
+<script src="assets/js/adv-craft.js"></script>
+<!-- 扩展与接入：Skill / MCP / 名词澄清。这三条挂回 craft 主题，
+     所以单独一个批次文件，不动 adv-craft.js（那文件已经 70KB 了） -->
+<script src="assets/js/adv-extend.js"></script>
+
+<script src="assets/js/anim.js"></script>
+<!-- 入门三档的动效场景（五套模板骨架）。必须在 anim.js 之后：
+     它要用 anim.js 导出的 __ANIM_REG 才能把场景挂进去 -->
+<script src="assets/js/anim-lite.js"></script>
+<!-- 知识图谱：views.js 要调 W.ATLAS.viewHtml()，必须排在它前面 -->
+<script src="assets/js/atlas.js"></script>
+<script src="assets/js/views.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+(function () {
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  window.AIWB.boot();
+})();
+</script>
+</body>
+</html>
